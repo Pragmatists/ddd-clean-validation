@@ -1,0 +1,95 @@
+<html
+        xmlns:c="http://www.concordion.org/2007/concordion"
+        xmlns:r="http://pragmatists.github.io/concordion-rest-extension"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://pragmatists.github.io/concordion-rest-extension http://pragmatists.github.io/concordion-rest-extension/xsd/concordion-rest.xsd">
+<body class="container">
+
+<h2 class="page-header">One field invalid (Simple validation)</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>field</th>
+        <th>rules</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>login</td>
+        <td>
+            <span class="label label-default">required</span>
+            <span class="label label-danger">email</span>
+            <span class="label label-default">unique</span>
+        </td>
+    </tr>
+    <tr>
+        <td>password</td>
+        <td>
+            <span class="label label-default">required</span>
+            <span class="label label-default">longerThan8</span>
+            <span class="label label-default">hasSpecialCharacter</span>
+            <span class="label label-default">hasNumber</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            passwordAgain
+        </td>
+        <td>
+            <span class="label label-default">equalTo(password)</span>
+        </td>
+    </tr>
+    <tr>
+        <td>coupon</td>
+        <td>
+            <span class="label label-default">promotionPolicyAcceptance</span>
+        </td>
+    </tr>
+    <tr>
+        <td>promotionPolicyAccepted</td>
+        <td>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div id="create" class="panel panel-default" c:execute="clearUsers()">
+    <div class="panel-heading"><b>Registering User</b></div>
+    <div class="panel-body">
+        <r:request>
+            When I send
+            <r:post>/api/v1/register</r:post>
+            as
+            <r:setHeader name="Content-Type">application/json</r:setHeader>
+            <br/>
+            With following body
+            <r:jsonBody>
+                {
+                    "login": "john.smith",
+                    "password": "12345678",
+                    "passwordAgain": "12345678",
+                    "coupon": "",
+                    "promotionPolicyAccepted": false
+                }
+            </r:jsonBody>
+
+            <br/>
+            Then I should receive
+            <r:status>HTTP/1.1 400 Bad Request</r:status>
+            <r:jsonResponse>
+                {
+                    "errors": [
+                        {
+                            "path": "login",
+                            "message": "Provided email [john.smith] is not valid"
+                        }
+                    ]
+                }
+            </r:jsonResponse>
+
+        </r:request>
+    </div>
+</div>
+</body>
+</html>

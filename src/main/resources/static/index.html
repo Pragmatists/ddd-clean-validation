@@ -1,0 +1,83 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.1/semantic.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/angular-toastr/1.7.0/angular-toastr.min.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-toastr/1.7.0/angular-toastr.tpls.min.js"></script>
+
+    <script src="app.js"></script>
+</head>
+<body ng-app="registrationApp">
+<div style="padding-top: 30px"></div>
+
+<div class="ui grid" ng-controller="RegisterCtrl">
+
+    <div class="row">
+        <div class="five wide column"></div>
+        <div class="six wide column">
+            <h1>Register</h1>
+            <form class="ui form segment" name="userForm"
+                  ng-submit="register()">
+
+                <p>Let's go ahead and get you signed up.</p>
+
+                <div class="field" ng-class="{'error': hasError('login')}">
+                    <label>Email</label>
+                    <input placeholder="john@acme.com" name="login" type="text" ng-model="user.login">
+                    <div class="ui error-msg" ng-if="hasError('login')">{{errors.login}}</div>
+                </div>
+                <div class="field" ng-class="{'error': hasError('password')}">
+                    <label>Password</label>
+                    <input name="password" type="password" ng-model="user.password">
+                    <div class="ui error-msg"
+                         ng-if="hasError('password')"> {{errors.password}}
+                    </div>
+                </div>
+                <div class="field" ng-class="{'error': hasError('passwordAgain')}">
+                    <label>Re-enter Password</label>
+                    <input name="passwordAgain" type="password" ng-model="user.passwordAgain">
+                    <div class="ui error-msg" ng-if="hasError('passwordAgain')">
+                        {{errors.passwordAgain}}
+                    </div>
+                </div>
+                <div class="field" ng-class="{'error': hasError('coupon')}">
+                    <label>Coupon</label>
+                    <input name="coupon" placeholder="XYZ" type="text" ng-model="user.coupon">
+                    <div class="ui error-msg" ng-if="hasError('coupon')">
+                        {{errors.coupon}}
+                    </div>
+                </div>
+                <div class="inline field" ng-class="{'error': hasErrorImmediately('promotionPolicyAccepted')}">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="promotionPolicyAccepted" ng-model="user.promotionPolicyAccepted">
+                        <label>I agree to the Terms and Conditions of Promotion</label>
+                    </div>
+                    <div class="ui error-msg"
+                         ng-if="hasError('promotionPolicyAccepted')">{{errors.promotionPolicyAccepted}}
+                    </div>
+                </div>
+
+                <div class="ui right aligned grid">
+
+                    <div class=" column">
+                        <button type="submit" class="ui blue circular icon huge button"><i class="checkmark icon"></i></button>
+                        <button type="reset" class="ui circular icon huge button" ng-click="reset()"><i class="remove icon"></i></button>
+                    </div>
+                </div>
+
+
+
+            </form>
+        </div>
+        <div class="five wide column"></div>
+    </div>
+</div>
+</body>
+</html>
